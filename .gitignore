@@ -1,0 +1,10 @@
+# Ignore the secret files
+backend/credentials.json
+backend/credentials.json.json
+backend/token.json
+
+# Ignore environment and dependencies
+backend/venv/
+frontend/node_modules/
+backend/__pycache__/
+.DS_Store
