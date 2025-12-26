@@ -12,10 +12,12 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 #here the new imports
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from .models import EmailMessage
 from .services import generate_email_summary
+from .serializers import EmailMessageSerializer
 
 
 # Google OAuth2 client ID and secret
@@ -88,42 +90,28 @@ def google_callback(request):
             "snippet": email_obj.snippet
         })
 
-    return Response(saved_emails)
+    return redirect('http://localhost:5173')
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def fetch_emails(request):
-    creds = None
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    emails = EmailMessage.objects.all().order_by('-id') # Get all emails from DB
+    serializer = EmailMessageSerializer(emails, many=True)
+    return Response(serializer.data)
+    
 
-    if not creds or not creds.valid:
-        return HttpResponse("No valid credentials. Please log in first.")
-    service = build('gmail', 'v1', credentials=creds)
-
+  
+@api_view(['POST'])
+def summarize_email(request, pk):
     try:
-        results = service.users().messages().list(userId='me', maxResults=5).execute()
-        messages = results.get('messages', [])
-
-        email_subjects = []
-        if not messages:
-            email_subjects.append('No messages found.')
-        else:
-            for message in messages:
-                msg = service.users().messages().get(userId='me', id=message['id']).execute()
-                snippet = msg.get('snippet', '(No snippet)')
-                email_subjects.append(snippet)
-        return HttpResponse('<br><br>'.join(email_subjects))
-    except Exception as e:
-        return HttpResponse(f"An error occurred: {str(e)}")
-    
-
-@api_view(['POST']) 
-def summarize_email(request,pk):
-    email = EmailMessage.objects.get(pk=pk)
-    
-    if not email.summary:
-        # Placeholder for AI logic (e.g., OpenAI/Gemini call)
-        # ai_response = call_llm(email.body)
-        email.summary = f"This is an AI summary for: {email.subject}" 
-        email.save()
+        email = EmailMessage.objects.get(pk=pk)
         
-    return Response({"summary": email.summary})
+        # Only call Gemini if we don't already have a summary
+        if not email.summary:
+            summary = generate_email_summary(email.body)
+            email.summary = summary
+            email.save()
+            
+        return Response({'summary': email.summary})
+    except EmailMessage.DoesNotExist:
+        return Response({'error': 'Email not found'}, status=404)
