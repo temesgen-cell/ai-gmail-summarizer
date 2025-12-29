@@ -1,27 +1,190 @@
-.summary-box {
-    background-color: #f0f7ff;
-    border-left: 4px solid #3b82f6;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 4px;
-    animation: fadeIn 0.5s ease-in;
+/* General Reset and Body Background */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000; /* Deep Black */
+  font-family: 'Courier New', Courier, monospace; /* Calculator style font */
+  color: #00FF41; /* Classic Matrix/Calculator Green */
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Outer Wrapper to center the app */
+.container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
+/* The Main App Box - "Edgy" with no rounded corners */
+.app-box {
+  width: 100%;
+  max-width: 900px;
+  background-color: #1a1a1a; /* Dark Gray */
+  border: 2px solid #ffffff; /* Sharp White Border */
+  box-shadow: 10px 10px 0px #333333; /* Blocky shadow for depth */
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: #000000;
+  border-bottom: 2px solid #ffffff;
+}
+
+.navbar h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Login Button - Rectangular and High Contrast */
+.login-btn {
+  background-color: #ffffff;
+  color: #000000;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #00FF41; /* Turns green on hover */
+  color: #000000;
+  cursor: crosshair; /* Hacker style cursor */
+}
+
+/* Main Content Area */
+.content {
+  padding: 20px;
+  background-color: #1a1a1a;
+}
+
+/* Suggestion for EmailList items (if you have control over that component's classes) */
+.email-item {
+  border: 1px solid #333333;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #0a0a0a;
+}
+
+
+
+
+
+
+
+/* Email List Container */
+.email-container h1 {
+  font-size: 1.2rem;
+  border-left: 5px solid #00FF41;
+  padding-left: 10px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+/* Individual Email Cards */
+.email-card {
+  background-color: #000000; /* Pure black for cards */
+  border: 1px solid #ffffff; /* Sharp white border */
+  padding: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Edgy Header for each card */
+.email-header {
+  border-bottom: 1px dashed #333333;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.sender {
+  font-size: 0.8rem;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.subject {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #00FF41; /* Green for subjects */
+}
+
+.snippet {
+  font-size: 0.9rem;
+  color: #cccccc; /* Light gray for readability */
+  line-height: 1.4;
+}
+
+/* The AI Action Button */
 .ai-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s;
+  background-color: transparent;
+  color: #00FF41;
+  border: 1px solid #00FF41;
+  padding: 8px 15px;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
 }
 
-/* .ai-btn:hover:not(:disabled) {
-    transform: scale(1.05);
-} */
+.ai-btn:hover:not(:disabled) {
+  background-color: #00FF41;
+  color: #000000;
+}
+
+.ai-btn:disabled {
+  border-color: #333333;
+  color: #333333;
+  cursor: not-allowed;
+}
+
+/* Summary Box - Looks like a terminal output */
+.summary-box {
+  background-color: #0a0a0a;
+  border: 1px solid #00FF41;
+  padding: 12px;
+  margin-top: 15px;
+}
+
+.summary-box strong {
+  color: #ffffff;
+  text-decoration: underline;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.summary-box p {
+  margin: 0;
+  color: #00FF41;
+  font-style: italic;
+}
+
+/* Loading/Empty States */
+.loader {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* Links in text */
+.email-list a {
+  color: #ffffff;
+  text-transform: uppercase;
+}

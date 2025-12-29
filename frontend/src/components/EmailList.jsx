@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../api/axiosConfig';
-import '../styles/App.css';
+import '../App.css';
 
 const EmailList = () => {
     const [emails, setEmails] = useState([]);
@@ -61,7 +61,7 @@ const EmailList = () => {
                             {/* Show summary if it exists, otherwise show button */}
                             {email.summary ? (
                                 <div className="summary-box">
-                                    <strong>✨ AI Summary:</strong>
+                                    <strong>AI Summary:</strong>
                                     <p>{email.summary}</p>
                                 </div>
                             ) : (
